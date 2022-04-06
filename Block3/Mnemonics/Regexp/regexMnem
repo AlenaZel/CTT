@@ -1,0 +1,5 @@
+StatusValidMsg = \[valid]
+
+ParsingError = Parsing Error: Header values either invalid or empty
+
+InvalidMsgBody = Value 'wrong value' is not facet-valid with respect to pattern '\[A-Z]\{3}' for type 'CurCode'

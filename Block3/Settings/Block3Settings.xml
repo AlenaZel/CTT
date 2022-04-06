@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<GlobalSettings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	name="Block3Settings.xml" xsi:noNamespaceSchemaLocation="http://ctt.cinimex.ru/globalSettings.xsd">
+
+	<!-- Переменная для присвоения значения rhf заголовку "TypeRequest"("client", 
+		"loan", "account", "report") -->
+	<PutVariable name="rfhTypeRequest" value="loan" />
+
+	<!-- Переменная для присвоения значения тегу Currency в сообщении запроса 
+		'[A-Z]{3}' -->
+	<PutVariable name="msgINCurrency" value="ABC" />
+
+	<Resources>
+		<QueueManager name="QMTESTERS1" port="4401" objName="QM"
+			channel="SYSTEM.DEF.SVRCONN" host="192.168.15.74">
+			<ccsid>1208</ccsid>
+		</QueueManager>
+		<Queue queue="TASK3.IN" manager="QM" objName="TASK3.IN" />
+		<Queue queue="TASK3.OUT" manager="QM" objName="TASK3.OUT"></Queue>
+		<Queue queue="TASK3.RESP" manager="QM" objName="TASK3.RESP" />
+	</Resources>
+	<LoadXpath path="Mnemonics\Xpath\xpathMnem" /><LoadRegexp path="Mnemonics\Regexp\regexMnem" />
+	<CreateMap variable="map">
+		<Add key="ERROR" value="NULL"></Add>
+	</CreateMap>
+	<CreateMap variable="map2">
+		<Add key="System" value="ESB" />
+		<Add key="TypeRequest" value="#rfhTypeRequest#" />
+		<Add key="ValidityCheck" value="OK" />
+	</CreateMap>
+	<CreateMap variable="map3">
+		<Add key="ERROR" value="Invalid or Empty Header" /></CreateMap>
+	<CreateMap variable="map4">
+		<Add key="ERROR" value="Invalid mesasge body" /></CreateMap>
+
+</GlobalSettings>

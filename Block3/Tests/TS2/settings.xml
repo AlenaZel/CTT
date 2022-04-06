@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Test xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	description="Обработка ошибок заголовков входящего сообщения. Пустые заголовки."
+	name="TS2" xsi:noNamespaceSchemaLocation="http://ctt.cinimex.ru/testSettings.xsd">
+	<ClearQueue clearMethod="MQGET">
+		<Queue objName="TASK3.OUT"></Queue>
+		<Queue objName="TASK3.RESP" />
+	</ClearQueue>
+	<GetTemplate variable="msg" path="Templates/ex3_msg1_withheaders.xml" />
+	<ChangeTemplate name="msg">
+		<ReplaceValue value="#msgINCurrency#" mnemonic="Currency" />
+	</ChangeTemplate>
+	<SendMessage variable="msg">
+		<Queue objName="TASK3.IN" />
+	</SendMessage>
+	<GetWaitMessage MaxTime="10000" WaitAfterReceive="150">
+	<GetMessage>
+		<Queue objName="TASK3.RESP" />
+		<Message variable="msgRESP">
+			<rfh2map variable="map3" />
+		</Message>
+	</GetMessage>
+	</GetWaitMessage>
+	<PutVariable name="ErrHdrsMsgRESP" mnemonic="ParsingError"
+		variable="msgRESP" value="$0" />
+	<AssertEquals variable="ErrHdrsMsgRESP"
+		value="Parsing Error: Header values either invalid or empty"></AssertEquals>
+
+</Test>
+

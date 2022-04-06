@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Test xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	description="Обработка невалидного запроса" name="TS5"
+	xsi:noNamespaceSchemaLocation="http://ctt.cinimex.ru/testSettings.xsd">
+	<ClearQueue clearMethod="MQGET">
+		<Queue objName="TASK3.OUT"></Queue>
+		<Queue objName="TASK3.RESP" />
+	</ClearQueue>
+	<GetTemplate variable="msg" path="Templates/ex3_msg1_withheaders.xml" />
+	<ChangeTemplate name="msg">
+		<ReplaceValue value="wrong value" mnemonic="Currency" />
+	</ChangeTemplate>
+	<SendMessage variable="msg">
+		<Queue objName="TASK3.IN" />
+		<set>
+			<rfh2>
+				<setStringProperty name="System" value="CRM" />
+				<setStringProperty name="TypeRequest" value="#rfhTypeRequest#" />
+			</rfh2>
+		</set>
+	</SendMessage>
+	<GetWaitMessage MaxTime="10000" WaitAfterReceive="150">
+		<GetMessage>
+			<Queue objName="TASK3.RESP" />
+			<Message variable="msgRESP">
+				<rfh2map variable="map4" />
+			</Message>
+		</GetMessage>
+	</GetWaitMessage>
+	<PutVariable name="ErrHdrsMsgRESP" mnemonic="InvalidMsgBody"
+		variable="msgRESP" value="$0" />
+	<AssertEquals variable="ErrHdrsMsgRESP"
+		value="Value 'wrong value' is not facet-valid with respect to pattern '[A-Z]{3}' for type 'CurCode'"></AssertEquals>
+
+</Test>

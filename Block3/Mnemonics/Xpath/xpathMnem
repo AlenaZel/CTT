@@ -1,0 +1,3 @@
+Currency = //*[local-name()='Transaction']/*[local-name()='DealDetails']/*[local-name()='Currecny']
+
+DealCurrency = //*[local-name()='Transaction-Details']/*[local-name()='Deal-Currecny']
