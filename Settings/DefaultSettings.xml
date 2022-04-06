@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<GlobalSettings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	name="DefaultSettings.xml" xsi:noNamespaceSchemaLocation="http://ctt.cinimex.ru/globalSettings.xsd">
+
+	<Resources>
+		<QueueManager name="QMTESTERS1" port="4401" objName="QM"
+			channel="SYSTEM.DEF.SVRCONN" host="192.168.15.74">
+			<ccsid>1208</ccsid>
+		</QueueManager>
+		<Queue queue="TASK4.IN" manager="QM" objName="TASK4.IN" />
+		<Queue queue="TASK4.OUT" manager="QM" objName="TASK4.OUT" />
+		<Queue queue="TASK4.ERROR" manager="QM" objName="TASK4.ERROR" />
+		<Queue queue="TASK4.STORE" manager="QM" objName="TASK4.STORE" />
+		<Queue queue="TASK4.TO.EXTERNAL.SYSTEM" manager="QM"
+			objName="TASK4.TO.EXTERNAL.SYSTEM" />
+		<Queue queue="TASK4.FROM.EXTERNAL.SYSTEM" manager="QM"
+			objName="TASK4.FROM.EXTERNAL.SYSTEM" />
+	</Resources>
+
+	<LoadXpath path="Mnemonics\Xpath\xpathMnem" />
+	<LoadRegexp path="Mnemonics\Regexp\regexpMnem" />
+
+	<CreateMap variable="map">
+		<Add key="ERROR" value="Not found message in store"></Add>
+	</CreateMap>
+
+</GlobalSettings>
