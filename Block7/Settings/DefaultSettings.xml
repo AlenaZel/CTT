@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<GlobalSettings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	name="DefaultSettings.xml" xsi:noNamespaceSchemaLocation="http://ctt.cinimex.ru/globalSettings.xsd">
+
+	<Resources>
+		<QueueManager name="QMTESTERS1" port="4401" objName="QM"
+			channel="SYSTEM.DEF.SVRCONN" host="192.168.15.74">
+			<ccsid>1208</ccsid>
+		</QueueManager>
+		<Queue queue="TASK7.IN" manager="QM" objName="TASK7.IN" />
+		<Queue queue="TASK7.OUT" manager="QM" objName="TASK7.OUT" />
+		<Queue queue="TASK7.ERROR" manager="QM" objName="TASK7.ERROR" />
+	</Resources>
+
+	<LoadXpath path="Mnemonics\Xpath\xpathMnem" />
+	<LoadRegexp path="Mnemonics\Regexp\regexpMnem" />
+
+</GlobalSettings>

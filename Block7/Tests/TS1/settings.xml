@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Test xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	description="Обработка ошибок от внешней системы" name="TS1"
+	xsi:noNamespaceSchemaLocation="http://ctt.cinimex.ru/testSettings.xsd">
+
+	<ClearQueue clearMethod="MQGET">
+		<Queue objName="TASK7.IN" />
+		<Queue objName="TASK7.OUT" />
+		<Queue objName="TASK7.ERROR" />
+	</ClearQueue>
+
+	<GetTemplate variable="msg" path="Templates/ex7_msg_valid_code.xml" />
+	<ChangeTemplate name="msg">
+		<ReplaceValue mnemonic="Currency" value="ZZZ" />
+	</ChangeTemplate>
+
+	<SendMessage variable="msg">
+		<Queue objName="TASK7.IN" />
+	</SendMessage>
+
+	<GetWaitMessage MaxTime="20000" WaitAfterReceive="1000">
+		<GetMessage>
+			<Queue objName="TASK7.ERROR" />
+			<Message variable="msgErr">
+			</Message>
+		</GetMessage>
+	</GetWaitMessage>
+
+	<PutVariable name="errCode" mnemonic="CodeError" variable="msgErr"
+		value="$0" />
+	<AssertEquals variable="errCode"
+		value="Currency code ZZZ is not allowed due to database restrictions"></AssertEquals>
+
+</Test>

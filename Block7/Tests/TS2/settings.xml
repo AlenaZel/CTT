@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Test xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	description="Обработка внешней системой валидного запроса" name="TS2"
+	xsi:noNamespaceSchemaLocation="http://ctt.cinimex.ru/testSettings.xsd">
+
+<ClearQueue clearMethod="MQGET">
+		<Queue objName="TASK7.IN" />
+		<Queue objName="TASK7.OUT" />
+		<Queue objName="TASK7.ERROR" />
+	</ClearQueue>
+
+	<GetTemplate variable="msg" path="Templates/ex7_msg_valid_code.xml" />
+	<ChangeTemplate name="msg">
+	</ChangeTemplate>
+
+	<SendMessage variable="msg">
+		<Queue objName="TASK7.IN" />
+	</SendMessage>
+
+	<GetWaitMessage MaxTime="20000" WaitAfterReceive="1000">
+		<GetMessage>
+			<Queue objName="TASK7.OUT" />
+			<Message variable="msgOut">
+			</Message>
+		</GetMessage>
+	</GetWaitMessage>
+	
+	<ValidateXmlDocument schemaPath="XSD/Transaction-Details.xsd"
+		variable="msgOut" />
+		
+	<PutVariable name="curCode" mnemonic="Deal-Currecny" variable="msgOut"/>
+	<AssertEquals variable="curCode" value="BCZ"></AssertEquals>
+	
+</Test>
