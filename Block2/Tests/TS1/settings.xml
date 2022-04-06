@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Test xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	description="Преобразование входящего сообщения" name="TS1"
+	xsi:noNamespaceSchemaLocation="http://ctt.cinimex.ru/testSettings.xsd">
+	
+	<ClearQueue clearMethod="MQGET">
+		<Queue objName="TASK2.IN" />
+		<Queue objName="TASK2.RESP" />
+		<Queue objName="TASK2.OUT" />
+	</ClearQueue>
+
+	<GetTemplate variable="msg" path="Templates/ex2_msg1.xml" />
+	<ChangeTemplate name="msg">
+		<ReplaceValue mnemonic="Currency" value="QQQ" />
+		<ReplaceValue mnemonic="DealId" value="123456" />
+		<ReplaceValue mnemonic="BenifName" value="Ivanov Ivan" />
+		<ReplaceValue mnemonic="PayerAccount" value="02020202020202020202" />
+	</ChangeTemplate>
+
+	<SendMessage variable="msg">
+		<Queue objName="TASK2.IN" />
+	</SendMessage>
+	
+	<GetWaitMessage MaxTime="20000" WaitAfterReceive="1000">
+		<GetMessage>
+			<Queue objName="TASK2.OUT" />
+			<Message variable="msg1">
+			</Message>
+		</GetMessage>
+		<GetMessage>
+			<Queue objName="TASK2.RESP" />
+			<Message variable="msg2">
+			</Message>
+		</GetMessage>
+	</GetWaitMessage>
+	
+	<ValidateXmlDocument schemaPath="XSD/Transaction-Details.xsd"
+		variable="msg1" />	
+	<ValidateXmlDocument schemaPath="XSD/Transaction-Result.xsd"
+		variable="msg2" />
+		
+	<AssertEquals variable="msg1" mnemonic="Deal-Currecny"
+		value="QQQ" />
+	<AssertEquals variable="msg1" mnemonic="Transaction-ID"
+		value="123456" />
+	<AssertEquals variable="msg1" mnemonic="Beneficiary-Name"
+		value="Ivanov Ivan" />
+	<AssertEquals variable="msg1" mnemonic="Payer-Account"
+		value="02020202020202020202" />
+
+</Test>

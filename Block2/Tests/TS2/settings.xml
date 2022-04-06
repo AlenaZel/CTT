@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Test xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	description="Проверка обработки невалидного сообщения" name="TS2"
+	xsi:noNamespaceSchemaLocation="http://ctt.cinimex.ru/testSettings.xsd">
+
+	<ClearQueue clearMethod="MQGET">
+		<Queue objName="TASK2.IN" />
+		<Queue objName="TASK2.RESP" />
+		<Queue objName="TASK2.OUT" />
+	</ClearQueue>
+
+	<GetTemplate variable="msg" path="Templates/ex2_msg1_invalid.xml" />
+
+	<SendMessage variable="msg">
+		<Queue objName="TASK2.IN" />
+	</SendMessage>
+
+	<GetWaitMessage MaxTime="20000" WaitAfterReceive="1000">
+		<GetMessage>
+			<Queue objName="TASK2.RESP" />
+			<Message variable="msg">
+			</Message>
+		</GetMessage>
+	</GetWaitMessage>
+
+	<ValidateXmlDocument schemaPath="XSD/Transaction-Result.xsd"
+		variable="msg" />
+
+	<PutVariable name="invContent" mnemonic="InvalidContent"
+		value="$0" variable="msg" />
+
+	<AssertEquals variable="invContent"	value="Invalid content was found" />
+
+</Test>
