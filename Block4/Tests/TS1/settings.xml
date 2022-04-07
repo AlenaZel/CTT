@@ -121,5 +121,12 @@
 		value="02020202020202020202" />
 	<AssertEquals variable="msgOut" mnemonic="Beneficiary-Name"
 		value="Ivanov Ivan" />
+	
+	<BrowseQueue maxTime="1000" mustBe="false">
+		<Queue objName="TASK4.STORE" />
+		<Message variable="msgStore">
+			<mqmd header="correlationId" value="#correlId1#" />
+		</Message>
+	</BrowseQueue>
 
 </Test>
