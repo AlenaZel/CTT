@@ -128,5 +128,12 @@
 			<mqmd header="correlationId" value="#correlId1#" />
 		</Message>
 	</BrowseQueue>
+	
+	<BrowseQueue maxTime="1000" mustBe="true">
+		<Queue objName="TASK4.STORE" />
+		<Message variable="msgStore2">
+			<mqmd header="correlationId" value="#correlId2#" />
+		</Message>
+	</BrowseQueue>
 
 </Test>
