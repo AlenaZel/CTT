@@ -1,0 +1,13 @@
+Currency = //*[local-name()='Transaction']/*[local-name()='DealDetails']/*[local-name()='Currecny']
+DealId = //*[local-name()='Transaction']/*[local-name()='DealDetails']/*[local-name()='DealId']
+BenifName = //*[local-name()='Transaction']/*[local-name()='Beneficiary']/*[local-name()='Name']
+PayerAccount = //*[local-name()='Transaction']/*[local-name()='Payer']/*[local-name()='Account']
+
+CurrencyToExtSyst = //*[local-name()='Transaction-Permission-Ask']/*[local-name()='Currecny']
+Transaction-ID = //*[local-name()='Transaction-Permission-Ask']/*[local-name()='Transaction-ID']
+CB-Account-Payer = //*[local-name()='Transaction-Permission-Ask']/*[local-name()='CB-Account-Payer']
+
+Deal-Currecny = //*[local-name()='Transaction-Details']/*[local-name()='Deal-Currecny']
+AnswTransaction-ID = //*[local-name()='Transaction-Details']/*[local-name()='Transaction-ID']
+Beneficiary-Name = //*[local-name()='Transaction-Details']/*[local-name()='Beneficiary-Name']
+Payer-Account = //*[local-name()='Transaction-Details']/*[local-name()='Payer-Account']
